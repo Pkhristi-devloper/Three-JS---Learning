@@ -1,0 +1,21 @@
+{
+  "name": "lecture-3---setting-up-tailwind",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "watch": "npx tailwindcss ./src/index.css -o ./src/style.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss-cli": "^11.0.1",
+    "three": "^0.179.1"
+  }
+}

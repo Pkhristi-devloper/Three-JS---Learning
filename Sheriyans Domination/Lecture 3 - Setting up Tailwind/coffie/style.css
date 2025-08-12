@@ -1,0 +1,395 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: fit-content;
+  width: 100vw;
+  margin-right: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  /* overflow-y: auto; */
+}
+.main {
+  height: 100vh;
+  width: 100vw;
+}
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 300px;
+  height: 90px;
+  background-color: #ffffff;
+}
+nav img {
+  padding-bottom: 15px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 70px;
+}
+nav .links a {
+  font-size: 20px;
+  text-decoration: none;
+  color: rgb(55, 53, 53);
+}
+nav .links a i {
+  font-size: 45px;
+  color: rgb(183, 77, 77);
+}
+
+.home {
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("https://tz47gb.yourbrand.studio/files/dynamicContent/sites/tz47gb/images/en/webpage_11/m66gvjjz/element_210/rwdMode_1/2400x836/main.webp");
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home h1 {
+  color: white;
+  font-size: 6rem;
+}
+
+.home p {
+  color: white;
+  text-align: center;
+  font-size: 2rem;
+  padding: 10px;
+}
+
+.home button {
+  background-color: rgb(148, 74, 74);
+  color: #ffffff;
+  padding: 15px 60px;
+  font-size: 22px;
+  margin: 20px;
+  border: none;
+}
+
+.best-seller {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.best-seller h1 {
+  font-size: 60px;
+  padding: 40px;
+  color: rgb(45, 45, 45);
+}
+
+.best-seller .cards {
+  display: flex;
+  gap: 20px;
+}
+
+.best-seller .cards .card img {
+  width: 350px;
+  height: 450px;
+}
+
+.best-seller .cards .card p {
+  font-size: 20px;
+  padding: 15px 0px;
+}
+
+.best-seller .cards .card h3 {
+  font-size: 25px;
+  color: rgb(57, 55, 55);
+}
+
+.new-collections {
+  width: 100vw;
+  margin: 150px 0px;
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(222, 220, 220);
+  height: 900px;
+}
+
+.new-collections h1 {
+  font-size: 60px;
+  padding: 20px 0px;
+  color: rgb(63, 63, 63);
+}
+.new-collections p {
+  width: 450px;
+  font-size: 20px;
+  color: rgb(70, 69, 69);
+  line-height: 35px;
+}
+
+.new-collections button {
+  padding: 20px 100px;
+  color: #ffffff;
+  background-color: #873631d2;
+  margin: 30px 0px;
+  font-size: 25px;
+  border: none;
+}
+
+.new-collections .images {
+  display: flex;
+  gap: 30px;
+}
+.new-collections .images .left {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+}
+
+.new-collections .images .left img {
+  height: 300px;
+  width: 400px;
+}
+.new-collections .images .right img {
+  height: 630px;
+  width: 500px;
+}
+
+.work-shops {
+  display: flex;
+  gap: 250px;
+  justify-content: center;
+  align-items: center;
+}
+
+.work-shops .image img {
+  height: 700px;
+  width: 700px;
+}
+
+.work-shops .data h1 {
+  font-size: 60px;
+  padding: 10px 0px;
+  color: rgb(59, 58, 58);
+}
+.work-shops .data p {
+  width: 500px;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.work-shops .data button {
+  padding: 20px 100px;
+  color: #ffffff;
+  background-color: #873631d2;
+  margin: 30px 0px;
+  font-size: 25px;
+  border: none;
+}
+
+.employees {
+  margin: 100px 0px;
+  padding: 50px 0px;
+  background-color: rgb(222, 220, 220);
+  padding: 200px 0px;
+  /* width: 100%; */
+}
+
+.employees .persons {
+  display: flex;
+  gap: 70px;
+  justify-content: center;
+  align-items: center;
+}
+
+.employees h1 {
+  font-size: 60px;
+  padding: 10px 0px;
+  color: rgb(59, 58, 58);
+  text-align: center;
+}
+
+.employees .persons .person {
+  text-align: center;
+  padding: 50px;
+}
+.employees .persons .person p {
+  width: 350px;
+  font-size: 20px;
+  color: rgb(59, 58, 58);
+  text-align: center;
+  padding: 20px;
+}
+
+.employees .persons .person img {
+  height: 130px;
+  width: 130px;
+  border-radius: 50%;
+}
+.employees .persons .person h4 {
+  padding: 20px;
+  font-size: 30px;
+  font-weight: 400;
+  color: rgb(54, 51, 51);
+}
+
+.photos {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  height: 800px;
+  margin-bottom: 100px;
+  margin-left: 50px;
+  margin-right: 60px;
+}
+
+.photos img {
+  height: 675px;
+  width: 650px;
+}
+
+.photos div img {
+  height: 350px;
+  width: 700px;
+}
+.photos div {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 700px;
+}
+.photos div .bottom {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+}
+.photos div .bottom img {
+  height: 300px;
+  width: 350px;
+}
+
+.story {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: url("https://tz47gb.yourbrand.studio/files/dynamicContent/sites/tz47gb/images/en/webpage_11/m66gvjjz/element_241/rwdMode_1/2400x800/history.webp");
+  background-position: center;
+  /* object-fit: cover; */
+  background-size: cover;
+}
+.story img {
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+}
+.opacity {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  opacity: 0.5;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  z-index: -1;
+}
+.story .content {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 50px;
+}
+/* .story img::after {
+    opacity: 0.8;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    z-index: 1;
+  } */
+
+.story div {
+  position: absolute;
+  left: 200px;
+  top: 5970px;
+  z-index: 2;
+}
+
+.story div h1 {
+  font-size: 60px;
+  padding: 10px 0px;
+  color: #ffffff;
+}
+
+.story div p {
+  width: 400px;
+  font-size: 20px;
+  color: #ffffff;
+  padding: 20px 0px;
+  line-height: 30px;
+}
+
+.footer {
+  height: 220px;
+  background-color: gray;
+}
+
+.footer .top {
+  height: 170px;
+  background-color: rgb(40, 39, 39);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 300px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .top div p {
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.footer .top .icons {
+  display: flex;
+  gap: 40px;
+}
+.footer .top .icons i {
+  color: rgb(140, 210, 140);
+  font-size: 40px;
+}
+
+.footer .bottom {
+  height: 50px;
+  background-color: rgb(74, 73, 73);
+}
+
+.footer .top div {
+  display: grid;
+  grid-template-columns: 200px 200px 200px 200px;
+  grid-template-rows: 20px 20px;
+  gap: 30px;
+}
+
+.footer .bottom p {
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 15px;
+}
+.footer .bottom p span {
+  color: rgb(2, 191, 2);
+}
