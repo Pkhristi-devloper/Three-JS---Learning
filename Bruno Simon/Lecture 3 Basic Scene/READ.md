@@ -35,8 +35,27 @@ Camera:
     we are going to use PerspetiveCamera
 
     we must have to provide the params inside the camera
+
     first param is fov - Field Of View
         this is a vertical vision angle
         in degrees
         also called fov
         (in simple language, it is the angle for which the camera can see)
+
+    second param is - Aspect Ratio
+        the width of render devided by the height of the render
+        we don't have a render then we can also decide by window width and height
+        or we can also define one object which will contain the sizes and then will define the aspect ratio
+        
+        for ex. : const sizes = {
+            height: 600,
+            width: 800
+        }
+        and when we want to use this, we will simply write sizes.width & sizes.height
+        
+Renderer
+    renderer renders the scene from the camera point of view
+    result drawn into canvas
+    A canvas is an HTML element in which we draw all the objects
+    Three.js will use WebGL to draw the render inside this canvas
+    You can create this or you can let Three.js do it
