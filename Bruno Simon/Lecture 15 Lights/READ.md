@@ -52,12 +52,23 @@ Lighting is essential in Three.js to create realistic scenes and highlight objec
 - Shines a cone of light, like a flashlight or stage spotlight.
 - Can cast shadows.
 - The angle and position control where the light goes.
+- color, intensity, distance, angle, penumbra, decay => These are the params
 - Syntax:  
     ```js
     const spotLight = new THREE.SpotLight(0xffffff, 1);
     spotLight.position.set(15, 40, 35);
     scene.add(spotLight);
     ```
+### 6. RectAreaLight
+- RectArea light works like the big rectangle lights that you can see on the photoshoot set
+- It's a mix between directional light and diffuse light
+- Syntax:  
+    ```js
+    const rectAreaLight = new THREE.Re(0xffffff, 1);
+    spotLight.position.set(15, 40, 35);
+    scene.add(spotLight);
+    ```
+
 
 ## Shadows
 - Only certain lights (Directional, Point, Spot) can cast shadows.

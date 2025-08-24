@@ -26,13 +26,13 @@ const material = new THREE.MeshStandardMaterial();
 // Cube
 const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
 const cube = new THREE.Mesh(cubeGeometry, material);
-cube.position.x = -2;
 cube.position.z = -2.2;
 scene.add(cube);
 
 //sphere
 const sphereGeometry = new THREE.SphereGeometry(0.5, 72, 72);
 const sphere = new THREE.Mesh(sphereGeometry, material);
+sphere.position.x = -2;
 sphere.position.z = -2.2;
 scene.add(sphere);
 
@@ -62,15 +62,18 @@ const ambientPointGroup = new THREE.Group();
 
 // Ambient Light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
-ambientPointGroup.add(ambientLight);
+// ambientPointGroup.add(ambientLight);
 
 // Point Light
 const pointLight = new THREE.PointLight(0xffffff, 10);
 pointLight.position.set(10, 10, 10);
-ambientPointGroup.add(pointLight);
+// ambientPointGroup.add(pointLight);
 
-const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
-ambientPointGroup.add(hemisphereLight);
+// const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+// ambientPointGroup.add(hemisphereLight);
+
+const rectAreaLight = new THREE.RectAreaLight("red",3,2,2)
+scene.add(rectAreaLight)
 
 // Add ambientPointGroup to lightsGroup
 lightsGroup.add(ambientPointGroup);
@@ -98,17 +101,17 @@ pointFolder.add(pointLight.position, "x", -5, 5, 0.01);
 pointFolder.add(pointLight.position, "y", -5, 5, 0.01);
 pointFolder.add(pointLight.position, "z", -5, 5, 0.01);
 
-const hemisphereFolder = lightsFolder.addFolder("Hemisphere Light");
-hemisphereFolder
-  .addColor({ skyColor: hemisphereLight.color.getHex() }, "skyColor")
-  .onChange((v) => hemisphereLight.color.setHex(v));
-hemisphereFolder
-  .addColor(
-    { groundColor: hemisphereLight.groundColor.getHex() },
-    "groundColor"
-  )
-  .onChange((v) => hemisphereLight.groundColor.setHex(v));
-hemisphereFolder.add(hemisphereLight, "intensity", 0, 2, 0.01);
+// const hemisphereFolder = lightsFolder.addFolder("Hemisphere Light");
+// hemisphereFolder
+//   .addColor({ skyColor: hemisphereLight.color.getHex() }, "skyColor")
+//   .onChange((v) => hemisphereLight.color.setHex(v));
+// hemisphereFolder
+//   .addColor(
+//     { groundColor: hemisphereLight.groundColor.getHex() },
+//     "groundColor"
+//   )
+//   .onChange((v) => hemisphereLight.groundColor.setHex(v));
+// hemisphereFolder.add(hemisphereLight, "intensity", 0, 2, 0.01);
 
 // Meshes group
 const meshesFolder = gui.addFolder("Meshes");
