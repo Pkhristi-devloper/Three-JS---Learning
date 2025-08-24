@@ -1,4 +1,7 @@
-import { OrbitControls } from "three/examples/jsm/Addons.js";
+import {
+  OrbitControls,
+  RectAreaLightHelper,
+} from "three/examples/jsm/Addons.js";
 import "./style.css";
 import * as THREE from "three";
 import GUI from "lil-gui";
@@ -62,18 +65,27 @@ const ambientPointGroup = new THREE.Group();
 
 // Ambient Light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
-// ambientPointGroup.add(ambientLight);
+ambientPointGroup.add(ambientLight);
+
+const directionLight = new THREE.DirectionalLight("white", 1);
+directionLight.position.set(0.5, 1, -10);
+scene.add(directionLight);
 
 // Point Light
 const pointLight = new THREE.PointLight(0xffffff, 10);
-pointLight.position.set(10, 10, 10);
-// ambientPointGroup.add(pointLight);
+pointLight.position.set(5, 1, -2);
+ambientPointGroup.add(pointLight);
 
-// const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
-// ambientPointGroup.add(hemisphereLight);
+const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 1);
+ambientPointGroup.add(hemisphereLight);
 
-const rectAreaLight = new THREE.RectAreaLight("red",3,2,2)
-scene.add(rectAreaLight)
+const rectAreaLight = new THREE.RectAreaLight("red", 3, 2, 2);
+scene.add(rectAreaLight);
+
+const spotlight = new THREE.SpotLight("green", 3, 10, Math.PI * 0.1);
+spotlight.position.set(0, 2, 0); // Position above the center
+spotlight.target = cube; // Target the cube (center object)
+scene.add(spotlight);
 
 // Add ambientPointGroup to lightsGroup
 lightsGroup.add(ambientPointGroup);
@@ -92,6 +104,17 @@ ambientFolder
   .onChange((v) => ambientLight.color.setHex(v));
 ambientFolder.add(ambientLight, "intensity", 0, 2, 0.01);
 
+// Spotlight controls in GUI
+const spotlightFolder = lightsFolder.addFolder('Spotlight');
+spotlightFolder.addColor({ color: spotlight.color.getHex() }, 'color')
+  .onChange(v => spotlight.color.setHex(v));
+spotlightFolder.add(spotlight, 'intensity', 0, 10, 0.01);
+spotlightFolder.add(spotlight.position, 'x', -5, 5, 0.01);
+spotlightFolder.add(spotlight.position, 'y', -5, 5, 0.01);
+spotlightFolder.add(spotlight.position, 'z', -5, 5, 0.01);
+spotlightFolder.add(spotlight, 'angle', 0, Math.PI / 2, 0.01);
+spotlightFolder.add(spotlight, 'penumbra', 0, 1, 0.01);
+
 const pointFolder = lightsFolder.addFolder("Point Light");
 pointFolder
   .addColor({ color: pointLight.color.getHex() }, "color")
@@ -101,17 +124,28 @@ pointFolder.add(pointLight.position, "x", -5, 5, 0.01);
 pointFolder.add(pointLight.position, "y", -5, 5, 0.01);
 pointFolder.add(pointLight.position, "z", -5, 5, 0.01);
 
-// const hemisphereFolder = lightsFolder.addFolder("Hemisphere Light");
-// hemisphereFolder
-//   .addColor({ skyColor: hemisphereLight.color.getHex() }, "skyColor")
-//   .onChange((v) => hemisphereLight.color.setHex(v));
-// hemisphereFolder
-//   .addColor(
-//     { groundColor: hemisphereLight.groundColor.getHex() },
-//     "groundColor"
-//   )
-//   .onChange((v) => hemisphereLight.groundColor.setHex(v));
-// hemisphereFolder.add(hemisphereLight, "intensity", 0, 2, 0.01);
+const rectAreaFolder = lightsFolder.addFolder("Rect Area Light");
+rectAreaFolder
+  .addColor({ color: rectAreaLight.color.getHex() }, "color")
+  .onChange((v) => rectAreaLight.color.setHex(v));
+rectAreaFolder.add(rectAreaLight, "intensity", 0, 10, 0.01);
+rectAreaFolder.add(rectAreaLight.position, "x", -10, 10, 0.01);
+rectAreaFolder.add(rectAreaLight.position, "y", -10, 10, 0.01);
+rectAreaFolder.add(rectAreaLight.position, "z", -10, 10, 0.01);
+rectAreaFolder.add(rectAreaLight, "width", 0.1, 10, 0.01);
+rectAreaFolder.add(rectAreaLight, "height", 0.1, 10, 0.01);
+
+const hemisphereFolder = lightsFolder.addFolder("Hemisphere Light");
+hemisphereFolder
+  .addColor({ skyColor: hemisphereLight.color.getHex() }, "skyColor")
+  .onChange((v) => hemisphereLight.color.setHex(v));
+hemisphereFolder
+  .addColor(
+    { groundColor: hemisphereLight.groundColor.getHex() },
+    "groundColor"
+  )
+  .onChange((v) => hemisphereLight.groundColor.setHex(v));
+hemisphereFolder.add(hemisphereLight, "intensity", 0, 2, 0.01);
 
 // Meshes group
 const meshesFolder = gui.addFolder("Meshes");
@@ -149,6 +183,41 @@ planeFolder.add(plane.scale, "z", 0.1, 5, 0.01).name("scaleZ");
 planeFolder.add(plane.rotation, "x", -Math.PI, Math.PI, 0.01).name("rotationX");
 planeFolder.add(plane.rotation, "y", -Math.PI, Math.PI, 0.01).name("rotationY");
 planeFolder.add(plane.rotation, "z", -Math.PI, Math.PI, 0.01).name("rotationZ");
+
+// Directional Light controls
+const directionalFolder = lightsFolder.addFolder("Directional Light");
+directionalFolder
+  .addColor({ color: directionLight.color.getHex() }, "color")
+  .onChange((v) => directionLight.color.setHex(v));
+directionalFolder.add(directionLight, "intensity", 0, 10, 0.01);
+directionalFolder.add(directionLight.position, "x", -10, 10, 0.01);
+directionalFolder.add(directionLight.position, "y", -10, 10, 0.01);
+directionalFolder.add(directionLight.position, "z", -10, 10, 0.01);
+
+const pointLightHelper = new THREE.PointLightHelper(pointLight, 1);
+scene.add(pointLightHelper);
+
+const directionalLightHelper = new THREE.DirectionalLightHelper(
+  directionLight,
+  1
+);
+scene.add(directionalLightHelper);
+
+const hemisphereLightHelper = new THREE.HemisphereLightHelper(
+  hemisphereLight,
+  0.5
+);
+scene.add(hemisphereLightHelper);
+
+const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight);
+scene.add(rectAreaLightHelper);
+
+const spotlightHelper = new THREE.SpotLightHelper(spotlight);
+scene.add(spotlightHelper);
+
+window.requestAnimationFrame(function(){
+  spotlightHelper.update()
+})
 
 // Animation Loop
 function animate() {

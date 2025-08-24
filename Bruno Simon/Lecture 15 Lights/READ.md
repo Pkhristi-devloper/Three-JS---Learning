@@ -88,3 +88,16 @@ Lighting is essential in Three.js to create realistic scenes and highlight objec
 ## Resources
 - [Three.js Documentation - Lights](https://threejs.org/docs/#api/en/lights/Light)
 - [Three.js Fundamentals - Lighting](https://threejs.org/manual/)
+
+
+## Lights
+- Lights can cost more in the CPU so use the minimum lights as possible
+- Minimal Cost Lights
+    - Ambient Light
+    - Hemisphere Light
+- Moderate cost light
+    - Directoinal Light
+    - Point Light
+- High cost Light
+    - Spot Light
+    - RectArea Light
