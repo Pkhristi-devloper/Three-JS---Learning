@@ -1,56 +1,79 @@
-When we add the controllers in our code, on every control when we are doing drag or zoom, then we always get one blue outline
+# Handling Canvas Controls, Resizing, Pixel Ratio, and Full Screen in Three.js
 
-to remove that, we will always give the canvas to outline:none in css
-Now the another problem is that, when we resize the window, or we can say when we change the height and width, then we must have to reload the page to change the height and width of canvas according to the screen.
-so we will simple add the event listener on the screen like this
+## Removing Canvas Outline
 
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+When using controllers in your code, dragging or zooming often results in a blue outline around the canvas.  
+To remove this, add the following CSS:
 
+```css
+canvas {
+    outline: none;
+}
+```
 
-pixel ratio
-Some might see the blurry render and stairseffect on edges.
-It's because you are testing on a screen with a pixel ratio greater than 1
-The pixel ratio corresponds to how many physical pixels you hace on the screen for one pixel unit on the software part.
+---
 
-Few years ago, all screens have pixel ratio 1 and if you looked closely, you could see those pixels
-Constructors like Apple saw an opportunity and started building screens with a pixel ratio of 2.
-Now some constructors are making even higher pixel ratios like 3 or even more
+## Responsive Canvas: Handling Window Resize
 
-If we have pixel ratio of 1, then there will be only 1 pixel inside 1 pixel
-or we can also say that only 1 pixel will be rendered in 1 pixel
-If we have pixel ratio of 2, then 2*2=4 pixels will be rendered inside 1 pixel.
-which informally can be say that we have 4 pixels inside the 1 pixel
-If we have pixel ratio of 3 then the 3*3=9 pixels will be rendered in 1 pixel.
-Highest pixel ratios are usually on the weakest devices
+When you resize the window, the canvas does not automatically adjust its height and width.  
+To fix this, add an event listener for the `resize` event:
 
-we will simply add the pixel ratio like this
+```js
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+```
 
-    renderer.setPixelRatio(window.devicePixelRatio)
+---
 
-but we have seen that some of the devices have to much large pixel ratio, so to avoid that, we will use Math.min like this
+## Pixel Ratio: Preventing Blurry Renders
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2))
+Some screens may show blurry renders or stair-step effects on edges.  
+This happens on screens with a pixel ratio greater than 1.
 
-here in the above code, we are setting the pixel ratio which is minimum of the device pixel ratio and 2.
+- **Pixel Ratio** is the number of physical pixels per software pixel.
+- Older screens had a pixel ratio of 1 (1 pixel rendered per pixel).
+- Modern screens (like Apple Retina) have ratios of 2, 3, or even higher.
 
+**Examples:**
+- Pixel ratio 1: 1 pixel rendered per pixel.
+- Pixel ratio 2: 2×2 = 4 pixels rendered per pixel.
+- Pixel ratio 3: 3×3 = 9 pixels rendered per pixel.
 
-Full Screen
+Higher pixel ratios are often found on weaker devices.
 
-Suppose we want one full screen and all the taskbar and all should be invisible.
-For that we will simply write the below code
+To set the pixel ratio in Three.js:
 
-    //full screen and exit full screen
-    window,
-    addEventListener("dblclick", () => {
-        if (!document.fullscreenElement) {
+```js
+renderer.setPixelRatio(window.devicePixelRatio);
+```
+
+To avoid extremely high pixel ratios (which can hurt performance), use:
+
+```js
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+```
+
+This sets the pixel ratio to the minimum of the device's pixel ratio and 2.
+
+---
+
+## Full Screen Mode
+
+To make the canvas go full screen (hiding taskbars and browser chrome), use:
+
+```js
+// Full screen and exit full screen
+window.addEventListener("dblclick", () => {
+    if (!document.fullscreenElement) {
         canvas.requestFullscreen();
-        } else {
+    } else {
         document.exitFullscreen();
-        }
-    });
+    }
+});
+```
 
-The above code will run on every browsers perfactly but not on safari browser 
+> **Note:**  
+> This code works perfectly on most browsers, but not on Safari.

@@ -1,61 +1,62 @@
-we need 4 elements to get started
-    A scene that will contain objects
-    some objects
-    a camera
-    a renderer
+# Getting Started with Three.js: Basic Scene
 
-Scene 
-    A scene is like a container 
-    we put objects, models,lights, etc. in it
-    At some point we ask the THREE.js to render that scene
-Objects
-    Can be many things
-    primitive geometries
-    imported models
-    particles
-    lights
-    etc.
-    
-Start with a simple cube
-We need to create a Mesh.   
-    combination of geometry(the shape) and a material(how it looks)
-    start with box geometry and MeshBasicMaterial
+To begin with Three.js, you need **four essential elements**:
 
-steps :
-    create a geometry
-    create a material
-    then create one mesh using geometry and material
-    after that add into the scene
+1. **Scene**  
+    A container for all objects, models, lights, etc.  
+    At some point, you ask Three.js to render this scene.
 
-Camera:
-    it is not visible
-    serve as point of view when doing render
-    can have multiple and swith between them
-    different types
-    we are going to use PerspetiveCamera
+2. **Objects**  
+    These can be:
+    - Primitive geometries
+    - Imported models
+    - Particles
+    - Lights
+    - And more
 
-    we must have to provide the params inside the camera
+    > **Tip:** Start with a simple cube!  
+    To create a cube, you need a **Mesh**—a combination of geometry (the shape) and material (how it looks).
 
-    first param is fov - Field Of View
-        this is a vertical vision angle
-        in degrees
-        also called fov
-        (in simple language, it is the angle for which the camera can see)
+    **Steps to create a Mesh:**
+    1. Create a geometry
+    2. Create a material
+    3. Combine them into a mesh
+    4. Add the mesh to the scene
 
-    second param is - Aspect Ratio
-        the width of render devided by the height of the render
-        we don't have a render then we can also decide by window width and height
-        or we can also define one object which will contain the sizes and then will define the aspect ratio
-        
-        for ex. : const sizes = {
-            height: 600,
-            width: 800
-        }
-        and when we want to use this, we will simply write sizes.width & sizes.height
-        
-Renderer
-    renderer renders the scene from the camera point of view
-    result drawn into canvas
-    A canvas is an HTML element in which we draw all the objects
-    Three.js will use WebGL to draw the render inside this canvas
-    You can create this or you can let Three.js do it
+3. **Camera**  
+    - Not visible in the scene
+    - Serves as the point of view for rendering
+    - You can have multiple cameras and switch between them
+    - Different types available; we'll use `PerspectiveCamera`
+
+    **Camera Parameters:**
+    - **Field Of View (fov):**  
+      Vertical vision angle (in degrees).  
+      Determines how much the camera can see.
+    - **Aspect Ratio:**  
+      Width of render divided by height.  
+      If you don't have a render yet, use the window's width and height, or define an object:
+
+      ```js
+      const sizes = {
+         width: 800,
+         height: 600
+      };
+      // Usage: sizes.width & sizes.height
+      ```
+
+4. **Renderer**  
+    - Renders the scene from the camera's point of view
+    - Draws the result into a **canvas** (an HTML element)
+    - Three.js uses **WebGL** to render inside this canvas
+    - You can create the canvas yourself, or let Three.js handle it
+
+---
+
+> **Summary:**  
+> - Create a scene  
+> - Add objects (like a cube mesh)  
+> - Set up a camera  
+> - Render everything with a renderer
+
+Happy coding with Three.js!

@@ -1,13 +1,28 @@
-Now we are using the js file or simply script tag to load three js.
-but loading three js with a <script> tag has too many limitations
-it doesn't include some of the classes which are necessary.
+# Three.js Project Setup with Webpack
 
-we need to run a server to emulate a website and for security reasons
+When starting with Three.js, you might load it using a simple `<script>` tag. However, this approach has several limitations:
 
-we will use bundler to load three js.
+- **Missing Classes:** Some essential Three.js classes may not be available.
+- **Security:** Running code directly from files can cause security issues.
+- **No Local Server:** You need a server to emulate a real website environment.
 
-bundler is a tool in which you send Javascript, CSS, HTML,images, Typesript, Stylus,Saas,etc.
-the bundler apply potential modifications and output a web friendly "bundle"
-Can do one more like local server, manage dependencies, improve compability, add modules support, optimize files, deploy, etc.
+## Why Use a Bundler?
 
-we will use node.js or npm to install the three js inside our server.
+A **bundler** is a tool that processes your project files—JavaScript, CSS, HTML, images, TypeScript, Stylus, Sass, and more. It applies necessary modifications and outputs a web-friendly "bundle".
+
+### Benefits of Using a Bundler
+
+- Runs a local development server
+- Manages dependencies
+- Improves compatibility
+- Adds module support
+- Optimizes files
+- Simplifies deployment
+
+## Getting Started
+
+We'll use **Node.js** and **npm** to install Three.js and set up our development server.
+
+---
+
+> **Tip:** Using a bundler like Webpack makes your Three.js workflow smoother and more scalable!

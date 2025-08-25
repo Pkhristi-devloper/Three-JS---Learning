@@ -1,211 +1,273 @@
-textures are the images that will cover the surfaceof the geometries
-many types with many different effects
+# Textures in Three.js
 
-we are going to discover the most used types with the door textures by Josao Paulo
+Textures are images that cover the surface of geometries.  
+There are many types, each with different effects.
 
-Types of Textures
+We are going to discover the most used types with the **door textures by Josao Paulo**.
 
-color texture
-    most simple one
-    applied on geometry
-Alpha texture
-    Grayscale image
-    white visible
-    black not visible
-Height (or displacement)
-    Grayscale image
-    move the vertices to create some relief
-    need enough subdivisions
-Normal 
-    Add details
-    Doesn't need subdivision
-    The vertices won't move
-    Lure the light about the face orientation
-    Better performances than adding a height texture with a lot of subdivisions
-Ambient Occlusion
-    Grayscale image
-    Add fake shadows in crevices
-    Not physically accurate
-    Helps to create contrasts and see details
-Metalness
-    Grayscale image
-    White is metallic
-    Black is non-metallic
-    Mostly for reflection
-Roughness
-    Grayscale image
-    In duo with the metalness
-    white is rough
-    black is smooth
-    mostly for light dissipation
+---
 
-There are many other tyepes, but these are the main ones and we will focus on them.
+## Types of Textures
 
-These textures (especially the metalness and roughness) follow the PBR principles
-    PBR - Physically Based Rendering
-    Many techniques that tend to follow the real life directions to get realistic results
-    Becoming the standard for realistic renders
-    Many software, engines, and libraries are using it 
-    
+### Color Texture
+- Most simple one
+- Applied on geometry
 
-Now to use the image as a texture, we have 2 ways.
-first one is to load the image and then save it into texture.
+### Alpha Texture
+- Grayscale image
+- White = visible
+- Black = not visible
 
-    let image = new Image();
-    const texture = new THREE.Texture(image);
-    image.onload = () => {
+### Height (or Displacement) Texture
+- Grayscale image
+- Moves the vertices to create relief
+- Needs enough subdivisions
+
+### Normal Texture
+- Adds details
+- Doesn't need subdivision
+- Vertices won't move
+- Tricks the light about face orientation
+- Better performance than height texture with many subdivisions
+
+### Ambient Occlusion Texture
+- Grayscale image
+- Adds fake shadows in crevices
+- Not physically accurate
+- Helps create contrast and show details
+
+### Metalness Texture
+- Grayscale image
+- White = metallic
+- Black = non-metallic
+- Mostly for reflection
+
+### Roughness Texture
+- Grayscale image
+- Used with metalness
+- White = rough
+- Black = smooth
+- Mostly for light dissipation
+
+---
+
+There are many other types, but these are the main ones and we will focus on them.
+
+---
+
+## PBR Principles
+
+These textures (especially metalness and roughness) follow the **PBR principles**:
+
+- **PBR**: Physically Based Rendering
+- Techniques that follow real-life directions for realistic results
+- Becoming the standard for realistic renders
+- Many software, engines, and libraries use it
+
+---
+
+## Using Images as Textures
+
+There are two ways to use images as textures:
+
+### 1. Load the image and save it into a texture
+
+```js
+let image = new Image();
+const texture = new THREE.Texture(image);
+image.onload = () => {
     texture.needsUpdate = true;
-    };
+};
+image.src = colorImage;
+```
 
-    image.src = colorImage;
+### 2. Use the TextureLoader
 
-The second way is to use the textureLoader
+```js
+let textureLoader = new THREE.TextureLoader();
+let texture = textureLoader.load("/src/assets/textures/color.jpg");
+```
 
-    let textureLoader = new THREE.TextureLoader();
-    let texture = textureLoader.load("/src/assets/textures/color.jpg")
-Now after the path in load method, we can pass three functions which are as below
-    load - when the image loaded successfully
-    progress - when the loading is progressing
-    error - if something went wrong
+You can pass three functions after the path in the `load` method:
 
-    let textureLoader = new THREE.TextureLoader();
-    let texture = textureLoader.load(
+- **load**: when the image loads successfully
+- **progress**: when loading is progressing
+- **error**: if something goes wrong
+
+```js
+let textureLoader = new THREE.TextureLoader();
+let texture = textureLoader.load(
     "/src/assets/textures/color.jpg",
-    () => {
-        console.log("loading");
-    },
-    () => {
-        console.log("Progress");
-    },
-    () => {
-        console.log("error");
-    }
-    );
+    () => { console.log("loading"); },
+    () => { console.log("Progress"); },
+    () => { console.log("error"); }
+);
+```
 
-But in real life, we don't use all of this. we simply provide path of image only.
+But in real life, we usually just provide the image path.
 
-We can use the loadingManager to mutualize the events
-It's useful if we want to know the global loading progress or be informed when everything is loaded
+---
 
-create an instance of the LoadingManager class and pass it to the TextureLoader
+## Loading Manager
 
-    let loadingManager = new THREE.LoadingManager()
+We can use the `LoadingManager` to handle global loading events.  
+It's useful to know the overall loading progress or when everything is loaded.
 
-    loadingManager.onStart =()=>{
-        console.log("Loading started")
-    }
-    loadingManager.onLoad = ()=>{
-        console.log("Loading finished");
-    }
-    loadingManager.onProgress = () =>{
-        console.log("Loading Progressing")
-    }
-    loadingManager.onError=() =>{
-        console.log("Error occurred")
-    }
-    let textureLoader = new THREE.TextureLoader(loadingManager);
-    let texture = textureLoader.load("/src/assets/textures/color.jpg");
+Create an instance of the `LoadingManager` class and pass it to the `TextureLoader`:
 
-UV unwrapping
-now if we replace the boxGeometry with other geometries, means if we will replace box with sphere, cone,Torus,Tube etc. then we will see that the texture is being stretched or squizzed in different ways to cover the geometry
-This is called UV unwrapping and it's like unwraping an origami or a candy wrap to make it flat
-Each vertex will have 2D coordinates on a flat plane(usually a square)
-We can see those UV co-ordinates in geometry.attributes.uv
+```js
+let loadingManager = new THREE.LoadingManager();
 
-    console.log(geometry.attributes.uv);
-Those UV coordinates are generated by three.js
-if you create your owngeometry, then you'll have to specify the UV coordinates 
-if you are making the geometry using the 3d software, then also you'll have to do the UV unwrapping
+loadingManager.onStart = () => {
+    console.log("Loading started");
+};
+loadingManager.onLoad = () => {
+    console.log("Loading finished");
+};
+loadingManager.onProgress = () => {
+    console.log("Loading Progressing");
+};
+loadingManager.onError = () => {
+    console.log("Error occurred");
+};
 
-Transform Textures
-We can also repeat texture by using the "repeat" property
-It's Vector2 with x and y properties.
+let textureLoader = new THREE.TextureLoader(loadingManager);
+let texture = textureLoader.load("/src/assets/textures/color.jpg");
+```
 
-    let texture = textureLoader.load("/src/assets/textures/color.jpg");
+---
 
-<!-- transform texture -->
+## UV Unwrapping
 
-    texture.repeat.x = 2;
-    texture.repeat.y = 3;
+If we replace `boxGeometry` with other geometries (sphere, cone, torus, tube, etc.),  
+the texture may stretch or squeeze to cover the geometry.  
+This is called **UV unwrapping**—like unwrapping origami or a candy wrap to make it flat.
 
-By default, the texture doesn't repeat and the last pixel get stretched.
-We can change that with THREE.RepeatWrapping on the wrapS and wrapT property
+Each vertex will have 2D coordinates on a flat plane (usually a square).  
+You can see those UV coordinates in `geometry.attributes.uv`:
 
-    texture.repeat.x = 2;
-    texture.repeat.y = 3;
-    texture.wrapS = THREE.RepeatWrapping
-    texture.wrapT = THREE.RepeatWrapping
+```js
+console.log(geometry.attributes.uv);
+```
 
-we can also offset the texture by using this
+- UV coordinates are generated by Three.js.
+- If you create your own geometry, you must specify the UV coordinates.
+- If you use 3D software, you'll also need to do UV unwrapping.
 
-    texture.offset.x = 0.5
-    texture.offset.y = 0.5
+---
 
-we can also use rotation of the texture as well as also can add the center property
+## Transforming Textures
 
-    texture.rotation = Math.PI / 4
-    texture.center.x = 0.5
-    texture.center.y = 0.5
+You can **repeat** a texture using the `repeat` property (a `Vector2` with `x` and `y`):
 
-Filtering and Minmapping
+```js
+let texture = textureLoader.load("/src/assets/textures/color.jpg");
 
-If you look at the cube's top face while the face is almost hidden, you'll see a blury texture.
-that is due to filtering and minmapping
+// Repeat texture
+texture.repeat.x = 2;
+texture.repeat.y = 3;
+```
 
-Mipmapping(or "mip mapping" with space) is a technic that consistes of creating half a smaller version of a texture again and again until we get a 1x1 texture
-All those texture variations are sent to the GPU, and the GPU will choose the most appropriate version of the texture.
+By default, the texture doesn't repeat and the last pixel gets stretched.  
+Change this with `THREE.RepeatWrapping` on the `wrapS` and `wrapT` properties:
 
-All of this is already handled by Three.js and the GPU, but we can choose different algorithms
-There are two types of filter algorithms
+```js
+texture.repeat.x = 2;
+texture.repeat.y = 3;
+texture.wrapS = THREE.RepeatWrapping;
+texture.wrapT = THREE.RepeatWrapping;
+```
 
-Minification Filter
-Happens when the pixels of texture are smaller then the pixels of render
-in other words, the texture is too big for the surface it covers
+You can also **offset** the texture:
 
-We can change the minification filter of the texture by using the minFilter property with these 6 values
+```js
+texture.offset.x = 0.5;
+texture.offset.y = 0.5;
+```
 
-    THREE.NearestFilter
-    THREE.LinearFilter
-    THREE.NearestMipmapNearestFilter
-    THREE.NearestMipmapLinearFilter
-    THREE.LinearMipmapNearestFilter
-    THREE.LinearMipmapLinearFilter (default)
-we will use the above as shown here
+And **rotate** the texture, setting the center property:
 
-    texture.minFilter= THREE.NearestFilter
+```js
+texture.rotation = Math.PI / 4;
+texture.center.x = 0.5;
+texture.center.y = 0.5;
+```
 
-Texture format and optimization
+---
 
-When creating a texture, keem in mind this three crusial elements
-    the height
-    the size (or resolution)
-    the data
+## Filtering and Mipmapping
 
-The Weight
-The users will have to download the textures
-choose the right type of file.
+If you look at the cube's top face while it's almost hidden, you'll see a blurry texture.  
+This is due to **filtering and mipmapping**.
 
-    .jpg - lossy compression but usually lighter
-    .png- loseless compression but usually heavier
-You can use compression websites and softwares like TinyPNG
+**Mipmapping** creates half-sized versions of a texture repeatedly until 1x1.  
+All variations are sent to the GPU, which chooses the most appropriate version.
 
-The Size
-Each pixel of the textures will have to be stored on the GPU regardless of the image's weight
-GPU has storage limitations
-it's even worse  because mipmappig increases the number of pixels to store.
-Try to reduce the size of your images as much as possible.
-The mipmapping will produce a half smaller version of the texture repeatedly until 1 x 1.
-Because of that, the texture width and height must be of power of 2
-    512 x 512
-    1024 x 1024
-    521 x 2048 
+Three.js and the GPU handle this, but you can choose different algorithms.
 
-The Data
-Textures supporst transparency but we don't have transparencyp in .jpg.
-if we want to have only one texture that combine color and alpha, we better use .png file.
-if we are using the normal texture, we want to have the exact values which is why we shouldn't apply lossy compression and we better use .png for those.
+### Filter Algorithms
 
-Sometimes we can combine the different data into
-one texture by using the red, green blue and alpha chennals respectively
-Always make sure that, if we are using any image not for personal use then we must have rights to use that texture
-we can also vrate our own textyre using photos and 2D softwares like photoshop or even procedural textures with Substance Designer
+#### Minification Filter
+
+Happens when the texture pixels are smaller than the render pixels (texture is too big for the surface).
+
+Change the minification filter with the `minFilter` property (6 values):
+
+- `THREE.NearestFilter`
+- `THREE.LinearFilter`
+- `THREE.NearestMipmapNearestFilter`
+- `THREE.NearestMipmapLinearFilter`
+- `THREE.LinearMipmapNearestFilter`
+- `THREE.LinearMipmapLinearFilter` (default)
+
+Example:
+
+```js
+texture.minFilter = THREE.NearestFilter;
+```
+
+---
+
+## Texture Format and Optimization
+
+When creating a texture, keep in mind these three crucial elements:
+
+- The height
+- The size (resolution)
+- The data
+
+### The Weight
+
+Users must download the textures—choose the right file type:
+
+- `.jpg`: lossy compression, usually lighter
+- `.png`: lossless compression, usually heavier
+
+Use compression tools like [TinyPNG](https://tinypng.com).
+
+### The Size
+
+Each pixel must be stored on the GPU, regardless of image weight.  
+GPU has storage limitations, and mipmapping increases the number of pixels to store.  
+Reduce image size as much as possible.
+
+Mipmapping produces half-sized versions until 1x1.  
+Texture width and height must be powers of 2:
+
+- `512 x 512`
+- `1024 x 1024`
+- `521 x 2048`
+
+### The Data
+
+Textures support transparency, but `.jpg` does not.  
+For color and alpha in one texture, use `.png`.
+
+For normal textures, use exact values—avoid lossy compression, use `.png`.
+
+Sometimes, you can combine different data into one texture using red, green, blue, and alpha channels.
+
+**Always make sure you have rights to use any image not for personal use.**  
+You can create your own textures using photos, 2D software like Photoshop, or procedural textures with Substance Designer.
+
+---

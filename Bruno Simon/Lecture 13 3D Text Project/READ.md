@@ -1,38 +1,62 @@
-we are going to use the TextBufferGeometry class but we need a particular font format called typeface
-if you're using a typeface you've downloaded, then you must have right to use it 
+# 3D Text in Three.js
 
-We can also use the fonts provided by three.js
-go to the /nodemosules/three/exmples/fonts folder
-we can take that fonts and out them in /static folder or we can import them directly
+We are going to use the `TextBufferGeometry` class, but we need a particular font format called **typeface**.  
+If you're using a typeface you've downloaded, then you must have the right to use it.
 
+Three.js also provides fonts you can use:  
+Go to the `/node_modules/three/examples/fonts` folder.  
+You can copy those fonts to your `/static` folder or import them directly.
 
-now we use bounding to improve the efficiency of our site.
-In 3d world, bounding means we will cover the whole object inside a simple invisible box/sphere
+---
 
-Another term is frustum culling
-this means we will render the object only which is inside the view area.
-this will improve the efficiency.
+## Bounding for Efficiency
 
-Simple language => frustum culling = Ignore the objects outside the frustum(view area)
+To improve the efficiency of our site, we use **bounding**.  
+In the 3D world, bounding means covering the whole object inside a simple invisible box or sphere.
 
+### Frustum Culling
 
-now in bouding, there are two types
-box bounding and sphere bounding
-by default, Three.js uses sphere bounding.
+**Frustum culling** means rendering only the objects inside the view area.  
+This improves efficiency.
 
-    textGeometry.computeBoundingBox()
-    console.log(textGeometry.boundingBox)
-The result is an instance of a Box3 with min and max properties.
-The min property isn't at 0 because of bevelthickness and bevelsize.
+> **Simple language:**  
+> Frustum culling = Ignore the objects outside the frustum (view area).
 
-    textGeometry.computeBoundingBox()
-    textGeometry.translate(
+---
+
+## Types of Bounding
+
+In bounding, there are two types:
+- **Box bounding**
+- **Sphere bounding**
+
+By default, Three.js uses **sphere bounding**.
+
+```js
+textGeometry.computeBoundingBox()
+console.log(textGeometry.boundingBox)
+```
+
+The result is an instance of a `Box3` with `min` and `max` properties.  
+The `min` property isn't at 0 because of `bevelThickness` and `bevelSize`.
+
+---
+
+## Centering the Text
+
+**First way:**  
+```js
+textGeometry.computeBoundingBox()
+textGeometry.translate(
     - textGeometry.boundingBox.max.x * 0.5,
     - textGeometry.boundingBox.max.y * 0.5,
     - textGeometry.boundingBox.max.z * 0.5
-    )
+)
+```
 
-This is the first way to make the text in center.
-there is another and simple way to do this as below.
+This centers the text geometry.
 
-    textGeometry.center()
+**Another (simpler) way:**  
+```js
+textGeometry.center()
+```

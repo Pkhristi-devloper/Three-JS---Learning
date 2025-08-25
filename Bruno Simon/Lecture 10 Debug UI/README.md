@@ -1,78 +1,123 @@
-We need to be able to tweak and debug easily
-It concerns the developer, the designer and even the client
-it will help finding the perfact color, speed, quantity, etc.
-For all of this, we need Debug UI.
-We can create out own or we can use library
-    lil-gui
-    control-panel
-    controlKit
-    Guify
-    Oui
-In this we will use lil-gui, but we can also try more than this
-for using this, we need to add lil-gui dependency like we added the gsap and all.
+# Debug UI in Three.js
 
-There are different types of elements you can add to that panel.
-Range       - for numbers with minimum and maximum value
-Color       - for colors with various formats
-Text        - for simple texts
-Checkbox    - for booleans(true or false)
-Select      - for a choice from a list 
-Button      - to trigger functions
-Folder      - to organize your panel if you have too many elements
+Debugging and tweaking are essential for developers, designers, and even clients. A good Debug UI helps you find the perfect color, speed, quantity, and more.
 
-Use gui.add(...) to add an element
-    the first parameter is an object
-    the second parameter is the property you want to change(or tweak)
-    
-    gui.add(mesh.position,'y')
+## Why Use Debug UI?
 
-The next parameters handle
-    Minimum
-    maximum
-    step(precision)
+- Easily tweak and debug your scene.
+- Find optimal values for colors, speeds, quantities, etc.
+- Useful for developers, designers, and clients.
 
-    gui.add(mesh.position,'y',minimum,maximum,precision)
-    gui.add(mesh.position,'y',-10,10,0.1)
+## Options for Debug UI Libraries
 
-We can also do the same thing using the min(...), max(...) and step(...) method.
+You can create your own Debug UI or use a library. Popular choices include:
 
-    gui.add(cube.position,'x').min(-10).max(10).step(0.01)
-we can also provide the name to the panel also
+- **lil-gui**
+- control-panel
+- controlKit
+- Guify
+- Oui
 
-    gui
-        .add(cube.position, "x")
-        .min(-10)
-        .max(10)
-        .step(0.01)
-        .name("Elevation");
+In this guide, we'll use **lil-gui**, but you can try others as well.  
+To use lil-gui, add it as a dependency (just like you did with gsap).
 
-you can also add some more parameters like this
-    
-    gui.add(cube, "visible");
-    gui.add(material, "wireframe");
-    gui.addColor(material, "color");
+---
 
-but the condition is that, the first param must be an object
-if we want to create our own object and want to pass in it then also we can do that as following
+## Elements You Can Add to the Panel
 
-    const parameters = {
+| Element   | Description                                 |
+|-----------|---------------------------------------------|
+| Range     | Numbers with min and max values             |
+| Color     | Colors in various formats                   |
+| Text      | Simple text                                 |
+| Checkbox  | Booleans (true/false)                       |
+| Select    | Choose from a list                          |
+| Button    | Trigger functions                           |
+| Folder    | Organize your panel with many elements      |
+
+---
+
+## Adding Elements with `gui.add(...)`
+
+- **First parameter:** Object
+- **Second parameter:** Property to tweak
+
+```js
+gui.add(mesh.position, 'y')
+```
+
+### Additional Parameters
+
+- Minimum
+- Maximum
+- Step (precision)
+
+```js
+gui.add(mesh.position, 'y', minimum, maximum, precision)
+gui.add(mesh.position, 'y', -10, 10, 0.1)
+```
+
+You can also use `.min(...)`, `.max(...)`, and `.step(...)` methods:
+
+```js
+gui.add(cube.position, 'x').min(-10).max(10).step(0.01)
+```
+
+### Naming the Panel Element
+
+```js
+gui
+    .add(cube.position, "x")
+    .min(-10)
+    .max(10)
+    .step(0.01)
+    .name("Elevation");
+```
+
+---
+
+## More Parameters
+
+```js
+gui.add(cube, "visible");
+gui.add(material, "wireframe");
+gui.addColor(material, "color");
+```
+
+**Note:** The first parameter must be an object.
+
+---
+
+## Custom Objects
+
+You can create your own object and pass it in:
+
+```js
+const parameters = {
     spin: () => {
         gsap.to(cube.rotation, {
-        y:cube.rotation.y + 10,
-        duration: 1.5,
+            y: cube.rotation.y + 10,
+            duration: 1.5,
         });
     },
-    };
-    gui.add(parameters, "spin");
+};
+gui.add(parameters, "spin");
+```
 
-Now if you want to hide the panel to take the screenshot or for whatever reason, then you will write the below simple code
+---
 
-    window.addEventListener("keydown", (e) => {
+## Hide/Show the Panel
+
+To hide the panel (e.g., for screenshots), use:
+
+```js
+window.addEventListener("keydown", (e) => {
     if (e.key == "h") {
         if (gui._hidden) {
-        gui.show();
+            gui.show();
         } else {
-        gui.hide();
+            gui.hide();
         }
     }
-    });
+});
+```

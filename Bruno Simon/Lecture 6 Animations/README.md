@@ -1,20 +1,25 @@
-One renderer is cool, but animation is better
-Animating in three js is like doing stop motion
-    move the object
-    take a picture
-    move the object bit more
-    take a picture
-    etc.
-Most screens run at 60 frames per second(FPS), but not always. 
-Your animation must look same regardless of the framerate
+# Animating in Three.js
 
-We need to update objects and do a render on each frame
-We are going to da that in a function and are going to call that fuction with window.requestAnimationFrame(functionName)
+One renderer is cool, but animation is better!  
+Animating in Three.js is like doing stop motion:
 
-The purpose of requestAnimationFrame is to call the function which is provided on the next frame.
-Always remember that, this requestAnimationFrame is not used to do animations, it's just used to call the function on each frame
-We are going to call the same function on each frame
+1. Move the object
+2. Take a picture
+3. Move the object a bit more
+4. Take a picture
+5. Repeat...
 
+Most screens run at **60 frames per second (FPS)**, but not always.  
+Your animation must look the same regardless of the framerate.
+
+---
+
+## Rendering on Each Frame
+
+We need to update objects and render on each frame.  
+This is done using a function called with [`window.requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame):
+
+```js
 function animate() {
   requestAnimationFrame(animate);
   cube.rotation.x += 0.01;
@@ -22,15 +27,23 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+```
 
-So in this we have one function named "animate" which is going to be called on each frames.
-ane in this code we are going to render the scene with our created camera on the renderer on each frame.
-Unfortunately, the higher the framerate, the faster the animation will be
+- The `animate` function is called on each frame.
+- The scene is rendered with the camera every frame.
 
-To solve this problem
-We need to know how much time it's been since the last tick
-Use Date.now() to get the current timestamps    
+> **Note:** Higher framerate means faster animation.  
+> We need to fix this so animation speed is consistent.
+
+---
+
+## Making Animation Framerate-Independent
+
+To solve this, calculate how much time has passed since the last frame:
+
+```js
 let time = Date.now();
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -40,41 +53,70 @@ function animate() {
   console.log(deltaTime);
 }
 animate();
+```
 
-here we are firstly defining the starting time. 
-and after that we are getting the current time of the animation.
-after finding the starting time and current time, we will simply difference or we can say delta time.
-and then we will simply log that delta time.
-If we have a good laptop with higher framerate, then the delta time will be smaller.
+- `deltaTime` is the time difference between frames.
+- On faster devices, `deltaTime` will be smaller.
 
+---
 
-And the another solution is to use clock
-Three.js has an inbuilt solution named clock.
-so that we will instantiate the clock and use it with getElapsedTime()
-first we will initialize the clock outside the function
-let clock = new THREE.Clock()
+## Using Three.js Clock
 
-and after that, we will simply call the getElapsedTime in every rotation
-cube.rotation.x = clock.getElapsedTime()
+Three.js provides an inbuilt solution: [`THREE.Clock`](https://threejs.org/docs/#api/en/core/Clock).
 
-And if we want to make anything in a circular path then we can do that as below
-  let time = clock.getElapsedTime()
-  cube.position.x = Math.sin(time)
-  cube.position.y = Math.cos(time)
-So here i have simply changed the position of the cube on each frame based on the sin and cos value.
+```js
+let clock = new THREE.Clock();
 
-If we want to have more control, create tweens, create timelines, etc., then we can use a library like gsap.
-
-gsap.to(cube.position,{
-  x:2,
-  duration:1,
-  delay:1
-})
-
-let click = () => {
-  window.requestAnimationFrame(click)
-  renderer.render(scene,camera)
+function animate() {
+  requestAnimationFrame(animate);
+  cube.rotation.x = clock.getElapsedTime();
+  renderer.render(scene, camera);
 }
-click()
+animate();
+```
 
-her we have done animation using GSAP.
+### Circular Motion Example
+
+Move the cube in a circular path:
+
+```js
+let time = clock.getElapsedTime();
+cube.position.x = Math.sin(time);
+cube.position.y = Math.cos(time);
+```
+
+---
+
+## Advanced Animations with GSAP
+
+For more control (tweens, timelines, etc.), use [GSAP](https://greensock.com/gsap/):
+
+```js
+gsap.to(cube.position, {
+  x: 2,
+  duration: 1,
+  delay: 1
+});
+```
+
+Render the scene on each frame:
+
+```js
+let click = () => {
+  window.requestAnimationFrame(click);
+  renderer.render(scene, camera);
+};
+click();
+```
+
+---
+
+## Summary
+
+- Use `requestAnimationFrame` for smooth updates.
+- Make animations framerate-independent using time calculations or `THREE.Clock`.
+- For complex animations, consider GSAP.
+
+---
+
+> **Happy Animating with Three.js!**
